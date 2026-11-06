@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f8e9ec">
+<title>Lívia — 3 anos | Jardim das Borboletas</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f8e9ec}
+body{display:flex;justify-content:center;align-items:center;font-family:Georgia,"Times New Roman",serif}
+.invite{position:relative;width:100vw;height:100vh;max-width:560px;overflow:hidden;background:#f8e9ec}
+video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#f8e9ec}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(255,248,237,.04),rgba(255,248,237,0) 55%,rgba(72,45,52,.10) 72%,rgba(72,45,52,.52) 100%)}
+.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;border:1px solid rgba(255,255,255,.9);background:rgba(255,248,237,.82);color:#b96d7d;font-size:30px;box-shadow:0 8px 30px rgba(80,50,60,.25);cursor:pointer;z-index:3}.play.hidden{display:none}
+.buttons{position:absolute;left:0;right:0;bottom:0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:10px;z-index:4}.buttons.hidden{display:none}
+.btn{appearance:none;border:1px solid rgba(255,255,255,.9);min-height:52px;border-radius:18px;padding:10px 12px;background:rgba(255,248,237,.90);color:#604b50;box-shadow:0 8px 28px rgba(86,55,63,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:inherit;font-size:13px;font-weight:bold;cursor:pointer}.btn:active{transform:scale(.97)
+}.btn.primary{background:linear-gradient(135deg,rgba(233,168,183,.97),rgba(207,199,232,.95));color:#fff}.btn span{display:block;font-size:11px;font-weight:normal;opacity:.78;margin-top:3px}
+.modal{position:absolute;inset:0;display:none;align-items:flex-end;background:rgba(55,37,43,.42);backdrop-filter:blur(5px);z-index:10}.modal.show{display:flex}.card{width:100%;padding:24px 20px calc(24px + env(safe-area-inset-bottom));border-radius:28px 28px 0 0;background:#fff8ed;color:#604b50;box-shadow:0 -10px 40px rgba(70,45,55,.25)}.card h2{margin:0 0 8px;color:#b96d7d;font-size:25px}.card p{margin:8px 0;line-height:1.45}.gift{margin:12px 0;padding:13px 15px;border-radius:16px;background:#fff;border:1px solid #eadbdc}.gift b{color:#b96d7d}.close{float:right;border:0;background:transparent;color:#b96d7d;font-size:25px;cursor:pointer}.small{font-size:12px;opacity:.75}.link,.whatsapp{display:block;text-align:center;text-decoration:none;margin-top:15px;padding:13px;border-radius:15px;color:#fff;font-family:Arial,sans-serif;font-weight:bold}.link{background:#a9c9b2}.whatsapp{background:#e9a8b7}
+</style></head>
+<body><div class="invite">
+<video id="inviteVideo" playsinline webkit-playsinline preload="auto" controls>
+<source src="./video_convite.mp4" type="video/mp4">Seu navegador não conseguiu carregar o vídeo.</video>
+<div class="shade"></div><button id="playButton" class="play" aria-label="Reproduzir vídeo">▶</button>
+<div id="buttons" class="buttons hidden">
+<button class="btn primary" onclick="openModal('rsvp')">🦋 Confirmar presença<span>Venha celebrar comigo!</span></button>
+<button class="btn" onclick="openModal('gift')">🎁 Sugestões de presente<span>Uma ajudinha para escolher</span></button>
+<button class="btn" onclick="openModal('map')">📍 Ver localização<span>Bosque Kids — Caieiras</span></button>
+<button class="btn" onclick="shareInvite()">💌 Compartilhar convite<span>Envie para a família</span></button></div>
+<div id="rsvp" class="modal" onclick="closeOutside(event)"><div class="card"><button class="close" onclick="closeModal('rsvp')">×</button><h2>Você vem? 🦋</h2><p>Será muito especial ter você comigo para comemorar meus <b>3 anos</b>!</p><a class="whatsapp" href="https://wa.me/?text=Olá!%20Confirmo%20minha%20presença%20na%20festa%20da%20Lívia%20🦋%20no%20dia%2030/01/2027%20às%2013h." target="_blank">Confirmar pelo WhatsApp</a><p class="small">O WhatsApp abrirá para você enviar a confirmação.</p></div></div>
+<div id="gift" class="modal" onclick="closeOutside(event)"><div class="card"><button class="close" onclick="closeModal('gift')">×</button><h2>Se quiser me presentear 🎀</h2><div class="gift">🧸 <b>Brinquedos:</b> eu amo brinquedos!</div><div class="gift">👗 <b>Roupas:</b> tamanho <b>8</b></div><div class="gift">👟 <b>Calçados:</b> tamanho <b>26</b></div><p class="small">O mais importante é ter você comigo nesse dia especial. 💕</p></div></div>
+<div id="map" class="modal" onclick="closeOutside(event)"><div class="card"><button class="close" onclick="closeModal('map')">×</button><h2>Onde será? 🌸</h2><p><b>Bosque Kids</b><br>Avenida Marcelino Bressiani, 971<br>Jardim Marcelino — Caieiras/SP<br><br><b>30 de janeiro de 2027 · 13h</b></p><a class="link" href="https://www.google.com/maps/search/?api=1&query=Bosque+Kids,+Avenida+Marcelino+Bressiani,+971,+Caieiras,+SP" target="_blank">Abrir no Google Maps</a></div></div>
+</div>
+<script>
+const video=document.getElementById('inviteVideo'),play=document.getElementById('playButton'),buttons=document.getElementById('buttons');
+function startVideo(){video.play().then(()=>play.classList.add('hidden')).catch(()=>play.classList.remove('hidden'))}
+play.addEventListener('click',startVideo);video.addEventListener('play',()=>play.classList.add('hidden'));video.addEventListener('ended',()=>buttons.classList.remove('hidden'));video.addEventListener('timeupdate',()=>{if(video.duration&&video.currentTime>=video.duration-.15)buttons.classList.remove('hidden')});
+function openModal(id){document.getElementById(id).classList.add('show')}function closeModal(id){document.getElementById(id).classList.remove('show')}function closeOutside(e){if(e.target===e.currentTarget)e.currentTarget.classList.remove('show')}
+async function shareInvite(){const data={title:'Convite — Lívia 3 anos 🦋',text:'Você está convidado para a festa de 3 anos da Lívia! 🦋 Jardim das Borboletas · 30/01/2027 às 13h · Bosque Kids, Caieiras.'};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(data.text);alert('Mensagem do convite copiada!')}catch(e){alert(data.text)}}}
+window.addEventListener('load',()=>setTimeout(()=>video.play().catch(()=>{}),300));
+</script></body></html>
