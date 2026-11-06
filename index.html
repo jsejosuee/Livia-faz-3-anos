@@ -32,7 +32,7 @@ video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;backgrou
 <script>
 const video=document.getElementById('inviteVideo'),play=document.getElementById('playButton'),buttons=document.getElementById('buttons');
 function startVideo(){video.play().then(()=>play.classList.add('hidden')).catch(()=>play.classList.remove('hidden'))}
-play.addEventListener('click',startVideo);video.addEventListener('play',()=>play.classList.add('hidden'));video.addEventListener('ended',()=>buttons.classList.remove('hidden'));video.addEventListener('timeupdate',()=>{if(video.duration&&video.currentTime>=video.duration-.15)buttons.classList.remove('hidden')});
+play.addEventListener('click',startVideo);video.addEventListener('play',()=>play.classList.add('hidden'));video.addEventListener('ended',()=>{video.currentTime=0;video.play().catch(()=>{play.classList.remove('hidden')});buttons.classList.remove('hidden')});video.addEventListener('timeupdate',()=>{if(video.duration&&video.currentTime>=video.duration-.15)buttons.classList.remove('hidden')});
 function openModal(id){document.getElementById(id).classList.add('show')}function closeModal(id){document.getElementById(id).classList.remove('show')}function closeOutside(e){if(e.target===e.currentTarget)e.currentTarget.classList.remove('show')}
 async function shareInvite(){const data={title:'Convite — Lívia 3 anos 🦋',text:'Você está convidado para a festa de 3 anos da Lívia! 🦋 Jardim das Borboletas · 30/01/2027 às 13h · Bosque Kids, Caieiras.'};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(data.text);alert('Mensagem do convite copiada!')}catch(e){alert(data.text)}}}
 window.addEventListener('load',()=>setTimeout(()=>video.play().catch(()=>{}),300));
